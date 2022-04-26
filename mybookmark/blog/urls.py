@@ -17,7 +17,7 @@ urlpatterns = [
     # /blog/post/djagno-example
     re_path(r'^post/(?P<slug>[-\w]+)/$', views.PostDV.as_view(), name='post_detail'),
     # /blog/archive/
-    path('archive', views.PostAV.as_view(), name='post_archive'),
+    path('archive/', views.PostAV.as_view(), name='post_archive'),
     # /blog/archive/2019/
     path('archive/<int:year>',views.PostYAV.as_view(), name='post_year_archive'),
     # /blog/arvhive/2019/nov/
