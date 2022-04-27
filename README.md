@@ -1,2 +1,3 @@
 
-즐겨찾기 기능을 구현 합니다.
+
+Djagno Web Programing을 학습합니다.
