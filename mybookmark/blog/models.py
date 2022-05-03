@@ -3,6 +3,7 @@ from tabnanny import verbose
 from tkinter.tix import Tree
 from django.db import models
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -13,6 +14,7 @@ class Post(models.Model):
     content = models.TextField('CONTENT')
     creat_dt = models.DateTimeField('CREATE DATE', auto_now_add=True)
     modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
+    tags  = TaggableManager(blank=True)
 
 
     class Meta:
@@ -25,7 +27,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail', args=(self.slug))
+        return reverse('blog:post_detail', args=(self.slug,))
     
     def get_previous(self):
         return self.get_previous_by_modify_dt()
