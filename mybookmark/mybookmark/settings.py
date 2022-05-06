@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',             # blog App 추가
     'taggit.apps.TaggitAppConfig',      # taggit opensource App 추가
     'taggit_templatetags2',             # taggit_template 추가
+    'photo',                            # photo App 추가
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-MEDIA_URl = '/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mybookmark/media')
 
 TAGGIT_CASE_INSENSITIVE = True
