@@ -9,7 +9,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
     path('account/', include('django.contrib.auth.urls')),
     path('account/register/', UserCreateView.as_view(), name='register'),
     path('account/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
