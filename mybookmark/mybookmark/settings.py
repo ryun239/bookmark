@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookmark.apps.BookmarkConfig',     # Bookmark App 추가
+    'widget_tweaks',
     'blog.apps.BlogConfig',             # blog App 추가
     'taggit.apps.TaggitAppConfig',      # taggit opensource App 추가
     'taggit_templatetags2',             # taggit_template 추가
@@ -137,3 +138,4 @@ DISQUS_MY_DOMAIN = 'http://127.0.0.1:8000'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_REDIRECT_URL = '/'
