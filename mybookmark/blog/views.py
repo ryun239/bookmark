@@ -14,8 +14,11 @@ from .form import PostSearchForm
 from django.db.models import Q
 from django.shortcuts import render
 
-# Create your views here.
-# -- ListView
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from mybookmark.views import OwnerOnlyMixin 
+
 class PostLV(ListView):
     model = Post
     template_name = 'blog/post_all.html'
@@ -26,13 +29,6 @@ class PostLV(ListView):
 class PostDV(DetailView):
     model = Post
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['disqus_short'] = f"{settings.DISQUS_SHORTNAME}"
-    #     context['disqus_id'] = f"post={self.object.id}-{self.object.slug}"
-    #     context['disqus_url'] = f"{settings.DISQUS_MY_DOMAIN}{self.object.get_absolute_url()}"
-    #     context['disqus_title'] = f"{self.object.slug}"
-    #     return context
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['disqus_short'] = f"{settings.DISQUS_SHORTNAME}"
@@ -93,3 +89,29 @@ class SearchFromViews(FormView):
         context['object_list'] = post_list
 
         return render(self.request, self.template_name, context)
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post 
+    fields  = ['title', 'slug', 'description', 'content', 'tags']
+    initial = {'slug': 'auto-filling-do-not-input'}
+    success_url = reverse_lazy('blog:index')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+class PostChangeView(LoginRequiredMixin, ListView):
+    template_name = 'blog/post_change_list.html'
+
+    def get_queryset(self):
+        return Post.objects.filter(owner=self.request.user)
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields  = ['title', 'slug', 'description', 'content', 'tags']
+    success_url = reverse_lazy('blog:index')
+
+class PostDelete(OwnerOnlyMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('blog:index')
